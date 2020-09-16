@@ -25,8 +25,6 @@ var start = function () {
         rl.close();
     }
     )
-
-    
 };
 
 exports.start = start;
