@@ -1,30 +1,37 @@
+var services = require('./service.js');
+var readline = require('readline');
+
+
+var rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
 var start = function () {
-    var test = true;
+    
+   
 
-    var readline = require('readline');
-    var rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
+     rl.question(`Menu
+    1. Lister les clients
+    99. Sortir`
+    , function (saisie) {
 
-    console.log('1. Lister les clients \n99. Sortir');
-
-    rl.question('Choisi un option : ', function (saisie) {
-
-        switch (`${saisie}`) {
+        switch (saisie) {
             case `1`:
-                console.log('Liste des clients');
-                require("./index.js");
+                services.listerClients
+                start();
                 break;
             case `99`:
                 console.log('Aurevoir')
+                rl.close();
                 break;
             default:
-                console.log('essey une autre chose')
+                console.log('essaye une autre chose')
+                start();
         }
-        rl.close();
-    }
+            }
     )
+
 };
 
 exports.start = start;
