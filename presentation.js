@@ -20,7 +20,6 @@ var start = function () {
         switch (saisie) {
             case `1`:
                 services.listerClients(function (listeCLients) {
-
                     if (listeCLients.error) {
                         console.log('oops...')
                     } else {
@@ -37,7 +36,7 @@ var start = function () {
             case `2`:
                 rl.question('Tapez le nom : ', function (nom) {
                     rl.question('Tapez le prenom : ', function (prenoms) {
-                        services.ajouterClients(nom, prenoms, function (newClient) {
+                        services.ajouterClient(nom, prenoms, function (newClient) {
                             if (newClient.error) {
                                 console.log('oops...')
                             } else {
@@ -46,6 +45,18 @@ var start = function () {
                             start();
                         });
                     })
+                })
+                break;
+            case `3`:
+                rl.question('Tapez le nom : ', function (nom) {
+                    services.chercherClient(nom, function (client) {
+                        if (client.error) {
+                            console.log('oops...')
+                        } else {
+                            console.log(client.data.nom +' '+ client.data.prenoms);
+                        }
+                        start();
+                    });
                 })
                 break;
             case `99`:

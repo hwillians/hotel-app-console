@@ -1,34 +1,48 @@
 var request = require('request');
+var baseUrl = 'https://hel-hotel-web-api.herokuapp.com';
 
 var listerClients = function (callback) {
-    request('https://hel-hotel-web-api.herokuapp.com/all', { json: true }, function (err, res, body) {
+    request(baseUrl + '/clients/all', { json: true }, function (err, res, body) {
         if (err) {
             callback({ error: err }
             )
-        }else {
-            callback({data : body});
+        } else {
+            callback({ data: body });
         }
-        
+
     });
 }
 
-var ajouterClients = function (leNom,lePrenoms, callback) {
-    request.post('https://hel-hotel-web-api.herokuapp.com/clients', {
+var ajouterClient = function (leNom, lePrenoms, callback) {
+    request.post(baseUrl + '/clients', {
         json: {
-          nom : leNom,
-          prenoms : lePrenoms
+            nom: leNom,
+            prenoms: lePrenoms
         },
-      },function (err, res, body) {
+    }, function (err, res, body) {
         if (err) {
             callback({ error: err }
             )
-        }else {
-            callback({data : body});
+        } else {
+            callback({ data: body });
         }
     });
-
 }
+
+var chercherClient = function (leNom, callback) {
+    request.get(baseUrl + '/clients/' + leNom, { json: true }, function (err, res, body) {
+        if (err) {
+            callback({ error: err }
+            )
+        } else {
+            callback({ data: body });
+        }
+
+    });
+}
+
 exports.listerClients = listerClients;
-exports.ajouterClients = ajouterClients;
+exports.ajouterClient = ajouterClient;
+exports.chercherClient = chercherClient;
 
 
