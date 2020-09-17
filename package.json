@@ -4,14 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
     "start": "node index.js"
      },
-=======
-    "start" : "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
->>>>>>> parent of 1cfc3cf... dependences
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hwillians/hotel-app-console.git"

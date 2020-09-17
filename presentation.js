@@ -35,10 +35,6 @@ var start = function () {
             }
     )
 
-<<<<<<< HEAD
-=======
-    
->>>>>>> parent of 1cfc3cf... dependences
 };
 
 exports.start = start;
