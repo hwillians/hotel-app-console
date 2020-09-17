@@ -18,8 +18,11 @@ var start = function () {
 
         switch (saisie) {
             case `1`:
-                services.listerClients
-                start();
+                services.listerClients(function (listeCLients) {
+                    console.log(listeCLients)
+                    start();
+                })
+                
                 break;
             case `99`:
                 console.log('Aurevoir')
