@@ -1,12 +1,12 @@
-var services = require('./service.js');
-var readline = require('readline');
+const services = require('./service.js');
+const readline = require('readline');
 
-var rl = readline.createInterface({
+const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
-var start = function () {
+const start = () => {
 
     rl.question(`
     Menu
@@ -15,16 +15,16 @@ var start = function () {
     3. Rechercher un client par nom
     4. Vérifier la disponibilité d'une chambre
     99. Sortir
-        Votre choix : `, function (saisie) {
+        Votre choix : `, saisie => {
 
         switch (saisie) {
             case `1`:
-                services.listerClients(function (listeCLients) {
+               services.listerClients(listeCLients => {
                     if (listeCLients.error) {
                         console.log('oops...')
                     } else {
                         console.log(listeCLients.data
-                            .map(function (client) {
+                            .map(client => {
                                 return client.nom + ' ' + client.prenoms
                             })
                             .join('\n')
@@ -34,9 +34,9 @@ var start = function () {
                 });
                 break;
             case `2`:
-                rl.question('Tapez le nom : ', function (nom) {
-                    rl.question('Tapez le prenom : ', function (prenoms) {
-                        services.ajouterClient(nom, prenoms, function (newClient) {
+                rl.question('Tapez le nom : ', nom => {
+                    rl.question('Tapez le prenom : ', prenoms => {
+                        services.ajouterClient(nom, prenoms, newClient => {
                             if (newClient.error) {
                                 console.log('oops...')
                             } else {
@@ -48,12 +48,12 @@ var start = function () {
                 })
                 break;
             case `3`:
-                rl.question('Tapez le nom : ', function (nom) {
-                    services.chercherClient(nom, function (client) {
+                rl.question('Tapez le nom : ', nom => {
+                    services.chercherClient(nom, client => {
                         if (client.error) {
                             console.log('oops...')
                         } else {
-                            console.log(client.data.nom +' '+ client.data.prenoms);
+                            console.log(client.data.nom + ' ' + client.data.prenoms);
                         }
                         start();
                     });
