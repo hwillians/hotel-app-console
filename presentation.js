@@ -9,7 +9,7 @@ const rl = readline.createInterface({
 const start = () => {
 
     rl.question(`
-    Menu
+            Menu
     1. Lister les clients
     2. Ajouter un client
     3. Rechercher un client par nom
@@ -19,44 +19,29 @@ const start = () => {
 
         switch (saisie) {
             case `1`:
-               services.listerClients(listeCLients => {
-                    if (listeCLients.error) {
-                        console.log('oops...')
-                    } else {
-                        console.log(listeCLients.data
-                            .map(client => {
-                                return client.nom + ' ' + client.prenoms
-                            })
-                            .join('\n')
-                        );
-                    }
-                    start();
-                });
+                services.listerClients()
+                    .then(listeClients => console.log(listeClients
+                        .map(client => `${client.nom} ${client.prenoms}`)
+                        .join('\n')))
+                    .catch(err => console.log(err))
+                    .finally(() => start())
                 break;
             case `2`:
                 rl.question('Tapez le nom : ', nom => {
                     rl.question('Tapez le prenom : ', prenoms => {
-                        services.ajouterClient(nom, prenoms, newClient => {
-                            if (newClient.error) {
-                                console.log('oops...')
-                            } else {
-                                console.log(newClient.data);
-                            }
-                            start();
-                        });
+                        services.ajouterClient(nom, prenoms)
+                            .then(newClient => console.log(newClient))
+                            .catch(err => console.log(err))
+                            .finally(() => start())
                     })
                 })
                 break;
             case `3`:
                 rl.question('Tapez le nom : ', nom => {
-                    services.chercherClient(nom, client => {
-                        if (client.error) {
-                            console.log('oops...')
-                        } else {
-                            console.log(client.data.nom + ' ' + client.data.prenoms);
-                        }
-                        start();
-                    });
+                    services.chercherClient(nom)
+                        .then(client => console.log(`${client.nom} ${client.prenoms}`))
+                        .catch(err => console.log(err))
+                        .finally(() => start())
                 })
                 break;
             case `99`:
@@ -67,9 +52,9 @@ const start = () => {
                 console.log('essaye une autre chose')
                 start();
         }
-    }
-    )
+    })
 };
+
 exports.start = start;
 
 

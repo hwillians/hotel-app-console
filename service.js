@@ -1,46 +1,29 @@
 const request = require('request-promise-native');
 const baseUrl = 'https://hel-hotel-web-api.herokuapp.com';
 
-const listerClients = callback => {
-    request(`${baseUrl}/clients/all`, { json: true }, function (err, res, body) {
-        if (err) {
-            callback({ error: err }
-            )
-        } else {
-            callback({ data: body });
-        }
 
-    });
+class Service {
+
 }
 
-const ajouterClient = function (leNom, lePrenoms, callback) {
-    request.post(baseUrl + '/clients', {
+function listerClients() {
+    return request(`${baseUrl}/clients/all`, { json: true })
+}
+
+function ajouterClient(leNom, lePrenoms) {
+    return request.post(`${baseUrl}/clients`, {
         json: {
             nom: leNom,
             prenoms: lePrenoms
         },
-    }, function (err, res, body) {
-        if (err) {
-            callback({ error: err }
-            )
-        } else {
-            callback({ data: body });
-        }
     });
 }
 
-const chercherClient = function (leNom, callback) {
-    request.get(baseUrl + '/clients/' + leNom, { json: true }, function (err, res, body) {
-        if (err) {
-            callback({ error: err }
-            )
-        } else {
-            callback({ data: body });
-        }
-
-    });
+function chercherClient(leNom) {
+    return request(`${baseUrl}/clients/${leNom}`, { json: true });
 }
 
+/*
 const chambreDisponible = function (leNom, callback) {
     request.get(baseUrl + '/clients/' + leNom, { json: true }, function (err, res, body) {
         if (err) {
@@ -52,11 +35,11 @@ const chambreDisponible = function (leNom, callback) {
 
     });
 }
+*/
 
-
-exports.chambreDisponible = chambreDisponible;
-exports.listerClients = listerClients;
-exports.ajouterClient = ajouterClient;
-exports.chercherClient = chercherClient;
-
+module.exports = {
+    listerClients,
+    ajouterClient,
+    chercherClient
+};
 
