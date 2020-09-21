@@ -25,8 +25,8 @@ export class Presentation {
             switch (saisie) {
                 case `1`:
                     this.service.listerClients()
-                        .then((listeClients: Client[]) => console.log(listeClients
-                            .map(c => new Client(c.nom, c.prenoms).toString())
+                        .then(listeClients => console.log(listeClients
+                            .map(client => client.toString())
                             .join('\n')))
                         .catch((err: string) => console.log(err))
                         .finally(() => this.start())
@@ -35,7 +35,7 @@ export class Presentation {
                     rl.question('Tapez le nom : ', (nom) => {
                         rl.question('Tapez le prenom : ', (prenoms) => {
                             this.service.ajouterClient(nom, prenoms)
-                                .then((c: Client) => console.log(new Client(c.nom, c.prenoms).toString()))
+                                .then((client) => console.log(client.toString()))
                                 .catch((err: string) => console.log(err))
                                 .finally(() => this.start())
                         })
@@ -44,8 +44,8 @@ export class Presentation {
                 case `3`:
                     rl.question('Tapez le nom : ', nom => {
                         this.service.chercherClient(nom)
-                            .then((listeClients: Client[]) => console.log(listeClients
-                                .map(c => new Client(c.nom, c.prenoms).toString())
+                            .then(listeClients => console.log(listeClients
+                                .map(client => client.toString())
                                 .join('\n'))).catch((err: string) => console.log(err))
                             .finally(() => this.start())
                     })
