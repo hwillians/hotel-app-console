@@ -21,7 +21,7 @@ export class Service {
             }
         });
     }
-    chercherClient(leNom: string): Promise<Client> {
+    chercherClient(leNom: string): Promise<Client[]> {
         return this.request({
             url: `${this.baseUrl}/clients/${leNom}`,
             method: `get`,

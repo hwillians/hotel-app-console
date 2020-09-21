@@ -44,8 +44,9 @@ export class Presentation {
                 case `3`:
                     rl.question('Tapez le nom : ', nom => {
                         this.service.chercherClient(nom)
-                            .then((c: Client) => console.log(new Client(c.nom, c.prenoms).toString()))
-                            .catch((err: string) => console.log(err))
+                            .then((listeClients: Client[]) => console.log(listeClients
+                                .map(c => new Client(c.nom, c.prenoms).toString())
+                                .join('\n'))).catch((err: string) => console.log(err))
                             .finally(() => this.start())
                     })
                     break;
