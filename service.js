@@ -1,45 +1,33 @@
-const request = require('request-promise-native');
-const baseUrl = 'https://hel-hotel-web-api.herokuapp.com';
-
-
 class Service {
+    constructor() {
+        this.request = require('request-promise-native');
+        this.baseUrl = 'https://hel-hotel-web-api.herokuapp.com';
+    }
+
+    listerClients() {
+        return this.request(`${this.baseUrl}/clients/all`, { json: true })
+    }
+
+    ajouterClient(leNom, lePrenoms) {
+        return this.request({
+            url: `${this.baseUrl}/clients`,
+            method: 'post',
+            json: {
+                nom: leNom,
+                prenoms: lePrenoms
+            }
+        });
+    }
+
+    chercherClient(leNom) {
+        return this.request({
+            url: `${this.baseUrl}/clients/${leNom}`,
+            method: `get`,
+            json: true
+        });
+    }
+
 
 }
 
-function listerClients() {
-    return request(`${baseUrl}/clients/all`, { json: true })
-}
-
-function ajouterClient(leNom, lePrenoms) {
-    return request.post(`${baseUrl}/clients`, {
-        json: {
-            nom: leNom,
-            prenoms: lePrenoms
-        },
-    });
-}
-
-function chercherClient(leNom) {
-    return request(`${baseUrl}/clients/${leNom}`, { json: true });
-}
-
-/*
-const chambreDisponible = function (leNom, callback) {
-    request.get(baseUrl + '/clients/' + leNom, { json: true }, function (err, res, body) {
-        if (err) {
-            callback({ error: err }
-            )
-        } else {
-            callback({ data: body });
-        }
-
-    });
-}
-*/
-
-module.exports = {
-    listerClients,
-    ajouterClient,
-    chercherClient
-};
-
+module.exports = { Service };
