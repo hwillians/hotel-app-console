@@ -1,6 +1,7 @@
 import readline from 'readline';
 import { Client } from './domains'
-import{Service} from './service'
+import { Service } from './service'
+
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -8,7 +9,7 @@ const rl = readline.createInterface({
 });
 
 export class Presentation {
-    service: Service ;
+    service: Service;
     constructor(service: Service) {
         this.service = service;
     }
@@ -18,7 +19,6 @@ export class Presentation {
 1. Lister les clients
 2. Ajouter un client
 3. Rechercher un client par nom
-4. Vérifier la disponibilité d'une chambre
 99. Sortir
     Votre choix : `, saisie => {
 
@@ -26,16 +26,16 @@ export class Presentation {
                 case `1`:
                     this.service.listerClients()
                         .then((listeClients: Client[]) => console.log(listeClients
-                            .map(client => `${client.nom} ${client.prenoms}`)
+                            .map(c => new Client(c.nom, c.prenoms).toString())
                             .join('\n')))
                         .catch((err: string) => console.log(err))
                         .finally(() => this.start())
                     break;
                 case `2`:
-                    rl.question('Tapez le nom : ', nom => {
-                        rl.question('Tapez le prenom : ', prenoms => {
+                    rl.question('Tapez le nom : ', (nom) => {
+                        rl.question('Tapez le prenom : ', (prenoms) => {
                             this.service.ajouterClient(nom, prenoms)
-                                .then((newClient: Client) => console.log(newClient))
+                                .then((c: Client) => console.log(new Client(c.nom, c.prenoms).toString()))
                                 .catch((err: string) => console.log(err))
                                 .finally(() => this.start())
                         })
@@ -44,7 +44,7 @@ export class Presentation {
                 case `3`:
                     rl.question('Tapez le nom : ', nom => {
                         this.service.chercherClient(nom)
-                            .then((client: Client) => console.log(`${client.nom} ${client.prenoms}`))
+                            .then((c: Client) => console.log(new Client(c.nom, c.prenoms).toString()))
                             .catch((err: string) => console.log(err))
                             .finally(() => this.start())
                     })
